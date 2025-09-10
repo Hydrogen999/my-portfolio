@@ -29,6 +29,7 @@
             color: var(--dark);
             background-color: var(--light);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         h1, h2, h3, h4, h5, h6 {
@@ -43,6 +44,96 @@
             padding: 0 2rem;
         }
         
+        /* Animation Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            60% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes progressBar {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        
+        /* Animation Classes */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .animate-fadeInLeft {
+            animation: fadeInLeft 1s ease forwards;
+        }
+        
+        .animate-fadeInRight {
+            animation: fadeInRight 1s ease forwards;
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .animate-bounceIn {
+            animation: bounceIn 1s forwards;
+        }
+        
+        .animate-typing {
+            overflow: hidden;
+            border-right: 3px solid var(--primary);
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink 0.75s step-end infinite;
+        }
+        
         /* Header & Navigation */
         header {
             background-color: rgba(255, 255, 255, 0.97);
@@ -51,6 +142,13 @@
             width: 100%;
             z-index: 1000;
             padding: 1.2rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 0.8rem 0;
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
         
         nav {
@@ -64,6 +162,11 @@
             font-weight: 700;
             color: var(--primary);
             text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
         }
         
         .logo span {
@@ -111,6 +214,11 @@
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .menu-btn:hover {
+            transform: rotate(90deg);
         }
         
         /* Hero Section */
@@ -121,11 +229,26 @@
             background-position: center;
             color: white;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease forwards;
         }
         
         .hero-content {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
         
         .hero h1 {
@@ -133,12 +256,15 @@
             margin-bottom: 1.5rem;
             line-height: 1.2;
             color: white;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.5s forwards;
         }
         
         .hero p {
             font-size: 1.3rem;
             margin-bottom: 2rem;
-            opacity: 0.9;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1s forwards;
         }
         
         .hero-buttons {
@@ -146,6 +272,8 @@
             justify-content: center;
             gap: 1.5rem;
             margin-top: 2.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.5s forwards;
         }
         
         .btn {
@@ -160,6 +288,23 @@
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
         }
         
         .btn:hover {
@@ -182,6 +327,14 @@
         /* Sections */
         section {
             padding: 6rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .section-title {
@@ -194,17 +347,20 @@
             display: inline-block;
             padding-bottom: 0.5rem;
             position: relative;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
         }
         
         .section-title h2::after {
             content: '';
             position: absolute;
-            width: 60%;
+            width: 0;
             height: 3px;
             background: linear-gradient(to right, var(--primary), var(--accent));
             bottom: 0;
             left: 20%;
             border-radius: 2px;
+            animation: progressBar 1.5s ease 0.5s forwards;
         }
         
         /* About Section */
@@ -216,6 +372,14 @@
         
         .about-text {
             flex: 1;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .about-text.animated {
+            opacity: 1;
+            transform: translateX(0);
         }
         
         .about-text h3 {
@@ -231,6 +395,14 @@
         .about-image {
             flex: 1;
             text-align: center;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .about-image.animated {
+            opacity: 1;
+            transform: translateX(0);
         }
         
         .about-image img {
@@ -238,6 +410,12 @@
             max-width: 400px;
             border-radius: 8px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transition: all 0.5s ease;
+        }
+        
+        .about-image img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
         }
         
         /* Qualifications Section */
@@ -252,15 +430,16 @@
         }
         
         .timeline::after {
-            content: '';
+           content: '';
             position: absolute;
             width: 6px;
-            background-color: var(--primary);
+            /* background-color: var(--primary); */
             top: 0;
             bottom: 0;
             left: 50%;
             margin-left: -3px;
             border-radius: 3px;
+            animation: progressBar 2s ease forwards;
         }
         
         .timeline-item {
@@ -268,6 +447,11 @@
             position: relative;
             width: 50%;
             box-sizing: border-box;
+            opacity: 0;
+        }
+        
+        .timeline-item.animated {
+            animation: fadeInUp 0.8s ease forwards;
         }
         
         .timeline-item:nth-child(odd) {
@@ -284,6 +468,12 @@
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
         
         .timeline-content::after {
@@ -331,11 +521,17 @@
             right: -20px;
             top: 15px;
             z-index: 10;
+            transition: all 0.3s ease;
         }
         
         .timeline-item:nth-child(even) .timeline-icon {
             left: -20px;
             right: auto;
+        }
+        
+        .timeline-icon:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         /* Professional Courses */
@@ -350,11 +546,18 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            transition: transform 0.3s, opacity 0.8s ease;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        
+        .course-card.animated {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .course-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) scale(1.02);
         }
         
         .course-header {
@@ -376,6 +579,12 @@
             margin-bottom: 0.8rem;
             padding-left: 1.5rem;
             position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .course-body li:hover {
+            transform: translateX(5px);
+            color: var(--primary);
         }
         
         .course-body li::before {
@@ -384,6 +593,11 @@
             left: 0;
             color: var(--accent);
             font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .course-body li:hover::before {
+            transform: scale(1.3);
         }
         
         /* Services Section */
@@ -403,11 +617,18 @@
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             text-align: center;
-            transition: transform 0.3s;
+            transition: transform 0.3s, opacity 0.8s ease;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        
+        .service-card.animated {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .service-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) rotate(1deg);
         }
         
         .service-icon {
@@ -421,6 +642,12 @@
             justify-content: center;
             font-size: 1.8rem;
             margin: 0 auto 1.5rem;
+            transition: all 0.5s ease;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: rotateY(180deg);
+            background-color: var(--accent);
         }
         
         .service-card h3 {
@@ -440,6 +667,14 @@
         
         .contact-info {
             flex: 1;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .contact-info.animated {
+            opacity: 1;
+            transform: translateX(0);
         }
         
         .contact-info h3 {
@@ -456,6 +691,11 @@
             display: flex;
             align-items: center;
             margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            transform: translateX(10px);
         }
         
         .contact-item i {
@@ -469,6 +709,12 @@
             justify-content: center;
             font-size: 1.2rem;
             margin-right: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover i {
+            background-color: var(--accent);
+            transform: scale(1.1);
         }
         
         .contact-form {
@@ -477,6 +723,14 @@
             padding: 2.5rem;
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .contact-form.animated {
+            opacity: 1;
+            transform: translateX(0);
         }
         
         .form-group {
@@ -496,6 +750,14 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 82, 118, 0.2);
+            transform: translateY(-2px);
         }
         
         .form-group textarea {
@@ -508,6 +770,12 @@
             background-color: var(--primary-dark);
             color: white;
             padding: 4rem 0 2rem;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+        
+        footer.animated {
+            opacity: 1;
         }
         
         .footer-content {
@@ -521,6 +789,12 @@
             font-weight: 700;
             color: white;
             margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-logo:hover {
+            color: var(--accent);
+            transform: scale(1.05);
         }
         
         .footer-links {
@@ -536,6 +810,22 @@
             color: var(--light-gray);
             text-decoration: none;
             transition: color 0.3s;
+            position: relative;
+        }
+        
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        .footer-links a:hover::after {
+            width: 100%;
         }
         
         .footer-links a:hover {
@@ -557,12 +847,12 @@
             color: white;
             border-radius: 50%;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
         
         .social-links a:hover {
             background-color: var(--accent);
-            transform: translateY(-3px);
+            transform: translateY(-3px) rotate(5deg);
         }
         
         .copyright {
@@ -645,7 +935,7 @@
 </head>
 <body>
     <!-- Header & Navigation -->
-    <header>
+    <header id="header">
         <div class="container">
             <nav>
                 <a href="#" class="logo">ADEKOLA<span>OLUWATOBI</span></a>
@@ -684,13 +974,13 @@
                 <h2>About Me</h2>
             </div>
             <div class="about-content">
-                <div class="about-text">
+                <div class="about-text animate-on-scroll">
                     <h3>Professional Chartered Accountant</h3>
                     <p>I am a highly qualified chartered accountant with extensive experience in financial management, auditing, and tax consulting. With a strong educational background and multiple professional certifications, I bring exceptional expertise to every client engagement.</p>
                     <p>My approach combines technical excellence with strategic insight to help businesses and individuals achieve their financial goals. I believe in building long-term relationships based on trust, transparency, and outstanding results.</p>
                     <p>Whether you need assistance with tax planning, financial reporting, or business advisory services, I am committed to delivering solutions that create tangible value for your financial future.</p>
                 </div>
-                <div class="about-image">
+                <div class="about-image animate-on-scroll">
                     <img src="blood.jpg" alt="adekola tobi ">
                 </div>
             </div>
@@ -704,7 +994,7 @@
                 <h2>Education & Qualifications</h2>
             </div>
             <div class="timeline">
-                <div class="timeline-item">
+                <div class="timeline-item animate-on-scroll">
                     <div class="timeline-icon">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
@@ -716,7 +1006,7 @@
                     </div>
                 </div>
                 
-                <div class="timeline-item">
+                <div class="timeline-item animate-on-scroll">
                     <div class="timeline-icon">
                         <i class="fas fa-certificate"></i>
                     </div>
@@ -728,7 +1018,7 @@
                     </div>
                 </div>
                 
-                <div class="timeline-item">
+                <div class="timeline-item animate-on-scroll">
                     <div class="timeline-icon">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
@@ -740,7 +1030,7 @@
                     </div>
                 </div>
                 
-                <div class="timeline-item">
+                <div class="timeline-item animate-on-scroll">
                     <div class="timeline-icon">
                         <i class="fas fa-certificate"></i>
                     </div>
@@ -752,7 +1042,7 @@
                     </div>
                 </div>
                 
-                <div class="timeline-item">
+                <div class="timeline-item animate-on-scroll">
                     <div class="timeline-icon">
                         <i class="fas fa-certificate"></i>
                     </div>
@@ -770,7 +1060,7 @@
             </div>
             
             <div class="courses">
-                <div class="course-card">
+                <div class="course-card animate-on-scroll">
                     <div class="course-header">
                         <h3>Financial Certifications</h3>
                     </div>
@@ -785,7 +1075,7 @@
                     </div>
                 </div>
                 
-                <div class="course-card">
+                <div class="course-card animate-on-scroll">
                     <div class="course-header">
                         <h3>Taxation Courses</h3>
                     </div>
@@ -800,7 +1090,7 @@
                     </div>
                 </div>
                 
-                <div class="course-card">
+                <div class="course-card animate-on-scroll">
                     <div class="course-header">
                         <h3>Business & Leadership</h3>
                     </div>
@@ -825,7 +1115,7 @@
                 <h2>Professional Services</h2>
             </div>
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card animate-on-scroll">
                     <div class="service-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
@@ -833,7 +1123,7 @@
                     <p>Comprehensive financial analysis and strategic planning to help businesses maximize profitability and growth potential.</p>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card animate-on-scroll">
                     <div class="service-icon">
                         <i class="fas fa-file-invoice-dollar"></i>
                     </div>
@@ -841,7 +1131,7 @@
                     <p>Strategic tax planning and compliance services to minimize tax liabilities while ensuring full regulatory compliance.</p>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card animate-on-scroll">
                     <div class="service-icon">
                         <i class="fas fa-search-dollar"></i>
                     </div>
@@ -849,7 +1139,7 @@
                     <p>Thorough internal and external auditing services to ensure financial integrity and regulatory compliance.</p>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card animate-on-scroll">
                     <div class="service-icon">
                         <i class="fas fa-balance-scale"></i>
                     </div>
@@ -857,7 +1147,7 @@
                     <p>Expert guidance on business structure, mergers, acquisitions, and strategic financial decision-making.</p>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card animate-on-scroll">
                     <div class="service-icon">
                         <i class="fas fa-hand-holding-usd"></i>
                     </div>
@@ -865,7 +1155,7 @@
                     <p>Personalized wealth management strategies to help individuals achieve their financial goals and secure their future.</p>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-card animate-on-scroll">
                     <div class="service-icon">
                         <i class="fas fa-book"></i>
                     </div>
@@ -883,7 +1173,7 @@
                 <h2>Get In Touch</h2>
             </div>
             <div class="contact-content">
-                <div class="contact-info">
+                <div class="contact-info animate-on-scroll">
                     <h3>Let's discuss how I can help you</h3>
                     <p>I'm available for consulting, financial advisory, and accounting services. Reach out to schedule a consultation.</p>
                     
@@ -920,7 +1210,7 @@
                     </div>
                 </div>
                 
-                <div class="contact-form">
+                <div class="contact-form animate-on-scroll">
                     <form>
                         <div class="form-group">
                             <label for="name">Your Name</label>
@@ -950,7 +1240,7 @@
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer id="footer">
         <div class="container">
             <div class="footer-content">
                 <div>
@@ -1012,6 +1302,52 @@
                     }
                 });
             });
+            
+            // Animation on scroll functionality
+            function animateOnScroll() {
+                const elements = document.querySelectorAll('.animate-on-scroll');
+                const windowHeight = window.innerHeight;
+                
+                elements.forEach(element => {
+                    const position = element.getBoundingClientRect().top;
+                    
+                    if (position < windowHeight - 100) {
+                        element.classList.add('animated');
+                    }
+                });
+                
+                // Animate sections
+                const sections = document.querySelectorAll('section');
+                sections.forEach(section => {
+                    const position = section.getBoundingClientRect().top;
+                    
+                    if (position < windowHeight - 100) {
+                        section.classList.add('visible');
+                    }
+                });
+                
+                // Animate footer
+                const footer = document.getElementById('footer');
+                const footerPosition = footer.getBoundingClientRect().top;
+                
+                if (footerPosition < windowHeight) {
+                    footer.classList.add('animated');
+                }
+                
+                // Header scroll effect
+                const header = document.getElementById('header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            }
+            
+            // Initial call
+            animateOnScroll();
+            
+            // Listen for scroll events
+            window.addEventListener('scroll', animateOnScroll);
         });
     </script>
 </body>
